@@ -1,51 +1,43 @@
-📚 Sistema de Gestão de Livraria (Livraria_DB)
+# 📚 Sistema de Gestão de Livraria (Livraria_DB)
 
-Este repositório contém o script SQL para a criação e povoamento do banco de dados relacional de uma Livraria, desenvolvido para gerenciar editoras, livros, autores, clientes, pedidos e itens de pedidos.
+Uma aplicação robusta de banco de dados relacional desenvolvida em **SQL Server** para gerenciar o ecossistema de uma livraria, englobando controle de estoque, editoras, autores, clientes, pedidos e itens associados.
 
-🚀 Tecnologias Utilizadas
+---
 
-SGBD: SQL Server (ou compatíveis com sintaxe T-SQL)
+## 🚀 O que a Aplicação Apresenta
 
-Linguagem: SQL (DDL e DML)
+O sistema é estruturado em tabelas relacionais integradas e restrições de integridade rigorosas:
 
-🗂️ Estrutura do Banco de Dados (Modelo Lógico)
+1. **Gestão de Editoras e Catálogo:**
+   * Tabela `tbl_editora` para armazenar informações corporativas e de contato das editoras parceiras.
+   * Tabela `Livro` para gerenciar o acervo bibliográfico, controlando ISBN, títulos, preços de venda atuais, ano de publicação e o estoque mínimo (`CHECK (QntNoEstoque > 0)`).
 
-O banco de dados é composto por 7 tabelas principais que armazenam e relacionam as informações do sistema:
+2. **Autores e Relacionamentos N:N:**
+   * Tabela `tbl_autor` para gerenciar os dados biográficos dos escritores.
+   * Tabela associativa `tbl_livro_autor` que conecta livros e autores de forma flexível utilizando chave primária composta.
 
-tbl_editora: Armazena as informações das editoras parceiras.
+3. **Clientes, Pedidos e Transações:**
+   * Tabela `tbl_cliente` com restrições de unicidade (`UNIQUE`) para CPF e e-mail.
+   * Tabela `tbl_pedido` para registro de transações vinculadas aos clientes e carimbos de data/hora (`DATETIME`).
+   * Tabela `tbl_ItemPedido` para detalhar unitariamente os livros comprados, quantidades e preços praticados por pedido.
 
-Livro: Contém o catálogo de livros disponíveis, vinculados às suas respectivas editoras.
+---
 
-tbl_autor: Registra os dados biográficos dos autores.
+## 🎨 Tecnologias e Conceitos Aplicados
 
-tbl_cliente: Mantém o cadastro dos clientes da livraria.
+- **SQL Server (T-SQL):** Criação de banco de dados relacional, definição de tipos de dados (`INT`, `VARCHAR`, `DECIMAL`, `DATETIME`, `DATE`).
+- **Integridade Referencial e Constraints:**
+  * Definição de Chaves Primárias (`PRIMARY KEY`) em todas as entidades.
+  * Implementação de Chaves Estrangeiras (`FOREIGN KEY`) para mapeamento de cardinalidades (1:N e N:N).
+  * Regras de validação com restrições `CHECK` e `UNIQUE`.
+- **Manipulação de Dados (DML):** Inserções estruturadas (`INSERT INTO`) e consultas de validação (`SELECT * FROM`).
 
-tbl_pedido: Registra as compras realizadas pelos clientes.
+---
 
-tbl_ItemPedido: Detalha os livros e quantidades compradas em cada pedido.
+## 📂 Estrutura do Projeto
 
-tbl_livro_autor: Tabela associativa que resolve o relacionamento N:N entre Livros e Autores.
-
-🔗 Relacionamentos entre as Tabelas
-
-EDITORA (1:N) LIVRO: Uma editora publica vários livros, mas cada livro pertence a uma única editora.
-
-LIVRO (N:N) AUTOR: Um livro pode ter múltiplos autores e um autor pode escrever vários livros (relacionamento intermediado por tbl_livro_autor).
-
-CLIENTE (1:N) PEDIDO: Um cliente pode realizar vários pedidos, mas cada pedido é associado a um único cliente.
-
-📋 Exemplo de Consultas de Verificação
-
-O script já inclui comandos de seleção (SELECT *) ao final de cada tabela para testar o povoamento inicial. Você pode validar executando consultas individuais como:
-
-SELECT * FROM Livro;
-SELECT * FROM tbl_cliente;
-
-💡 Autor
-
-Documentação gerada automaticamente com base na estrutura lógica do projeto de banco de dados da Livraria.
-
-PEDIDO (1:N) ITEM_PEDIDO: Um pedido contém um ou mais itens de compra.
-
-LIVRO (1:N) ITEM_PEDIDO: Um livro pode aparecer em vários itens de pedidos ao longo do tempo.# BD-Livraria
-Banco de Dados com tabelas te informações para uma livraria.
+```text
+📁 livraria-db/
+├── 📄 Livraria.sql          # Script principal de criação do banco, tabelas e inserção de dados
+├── 📄 Modelo_Logico.docx    # Documentação de modelagem lógica e mapeamento de relacionamentos
+└── ⚙️ README.md             # Documentação técnica e guia de utilização do repositório
